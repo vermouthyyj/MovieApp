@@ -8,3 +8,8 @@ public class Movie
     public required string Type { get; set; }
     public required string Poster { get; set; }
 }
+
+public class MovieList
+{
+    public required List<Movie> Movies { get; set; }
+}

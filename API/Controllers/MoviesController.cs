@@ -34,7 +34,7 @@ public class MoviesController : ControllerBase
             string content = await response.Content.ReadAsStringAsync();
 
             // Deserialize the JSON response directly into a list of Movie objects
-            var movies = JsonSerializer.Deserialize<MovieData>(content, new JsonSerializerOptions
+            var movies = JsonSerializer.Deserialize<MovieList>(content, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
