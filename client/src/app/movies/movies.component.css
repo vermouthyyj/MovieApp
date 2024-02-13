@@ -1,0 +1,75 @@
+  .movies {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .movie-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .movie-card {
+    width: calc(20% - 20px); /* Adjust as needed */
+    margin: 10px;
+    height: 50%;
+  }
+
+  .movie-card-header {
+    height: 100px;
+  }
+
+  .movie-card-image {
+    /* Set the maximum height for the image */
+    max-height: 600px; /* Adjust the height as per your design */
+    /* Ensure the image occupies the full width of its container */
+    width: 100%;
+    /* Maintain the aspect ratio of the image */
+    object-fit: cover;
+  }
+
+  .header-image-wrapper {
+    height: 100px;
+  }
+  
+  @media (max-width: 768px) {
+    .movie-card {
+      width: calc(50% - 20px); /* Adjust as needed for smaller screens */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .movie-card {
+      width: calc(100% - 20px); /* Adjust as needed for even smaller screens */
+    }
+  }
+
+  .loading-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+  }
+
+  .additional-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .card-gap {
+    margin-top: 1px; /* Adjust as needed */
+  }
+
+  .content-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .provider-name {
+      margin-right: 10px; /* Adjust as needed */
+  }
