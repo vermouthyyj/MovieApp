@@ -5,7 +5,7 @@ using System.Text.Json;
 namespace API.Controllers;
 
 [ApiController]
-[Route("[controller]/{provider}")] // /movies
+[Route("[controller]")] // /movies
 public class MoviesController : ControllerBase
 {
     private readonly HttpClient _httpClient;
@@ -17,42 +17,74 @@ public class MoviesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Movie>>> GetMovies(string provider)
+    public async Task<List<Movie>> GetMovies()
     {
-        string apiUrl = GetProviderApiUrl(provider);
+        var moviesFromCinemaWorld = await GetMoviesByProvider("cinemaworld");
+        var moviesFromFilmWorld = await GetMoviesByProvider("filmworld");
 
-        if (apiUrl == null)
+        // Create a dictionary to store combined movies
+        var combinedMoviesDict = new Dictionary<string, Movie>();
+
+        // Combine movies from both providers
+        CombineMovies(combinedMoviesDict, moviesFromCinemaWorld, "cw");
+        CombineMovies(combinedMoviesDict, moviesFromFilmWorld, "fw");
+
+        // Convert dictionary values to list
+        var combinedMovies = combinedMoviesDict.Values.ToList();
+
+        return combinedMovies;
+    }
+
+    private void CombineMovies(Dictionary<string, Movie> combinedMoviesDict, List<Movie> movies, string prefix)
+    {
+        foreach (var movie in movies)
         {
-            return NotFound();
+            // Extract ID without the first two letters
+            var idWithoutPrefix = movie.Id.Substring(2);
+
+            // Check if the movie ID exists in the combined movies dictionary
+            if (combinedMoviesDict.ContainsKey(idWithoutPrefix))
+            {
+                // Update the movie if it's a better match
+                if (movie.Id.Length < combinedMoviesDict[idWithoutPrefix].Id.Length)
+                {
+                    combinedMoviesDict[idWithoutPrefix] = movie;
+                }
+            }
+            else
+            {
+                // Reconstruct the movie ID with the appropriate prefix
+                var combinedId = prefix + idWithoutPrefix;
+                combinedMoviesDict[idWithoutPrefix] = movie;
+            }
         }
+    }
 
-        try
+    public async Task<List<Movie>?> GetMoviesByProvider(string provider)
+    {
+        string? apiUrl = GetProviderApiUrl(provider);
+
+
+        HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
+
+        if (response.IsSuccessStatusCode)
         {
-            HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
-            response.EnsureSuccessStatusCode(); // Ensure success status code
-
             string content = await response.Content.ReadAsStringAsync();
-
             // Deserialize the JSON response directly into a list of Movie objects
             var movies = JsonSerializer.Deserialize<MovieList>(content, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
 
-            if (movies == null)
-            {
-                return Ok(null);
-            }
-
-            return Ok(movies.Movies); // Return the list of movies
+            return movies?.Movies;
         }
-        catch (HttpRequestException ex)
+
+        else
         {
-            // Log and return a 500 Internal Server Error response
-            Console.WriteLine("HttpRequestException: " + ex.Message);
-            return StatusCode(500, "Error accessing movie provider API.");
+            // Retry logic goes here
+            await Task.Delay(5000); // Wait for 5 seconds before retrying
+            return await GetMoviesByProvider(provider); // Recursive call
         }
-
     }
 
     private static string? GetProviderApiUrl(string provider)

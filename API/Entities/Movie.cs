@@ -1,3 +1,4 @@
+
 namespace API.Entities;
 
 public class Movie
@@ -12,4 +13,9 @@ public class Movie
 public class MovieList
 {
     public required List<Movie> Movies { get; set; }
+
+    public static explicit operator MovieList(Task<IEnumerable<Movie>> v)
+    {
+        throw new NotImplementedException();
+    }
 }
