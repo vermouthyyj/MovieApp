@@ -14,7 +14,7 @@
   .movie-card {
     width: calc(20% - 20px); /* Adjust as needed */
     margin: 10px;
-    height: 50%;
+    height: 60vh;
   }
 
   .movie-card-header {
