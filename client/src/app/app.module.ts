@@ -13,13 +13,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
+import { PricesComponent } from './prices/prices.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MoviesComponent,
-    HeaderComponent
+    HeaderComponent,
+    PricesComponent
   ],
   imports: [
     BrowserModule,
