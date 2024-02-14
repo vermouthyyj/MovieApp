@@ -19,8 +19,15 @@ public class MoviesController : ControllerBase
     [HttpGet]
     public async Task<List<Movie>> GetMovies()
     {
-        var moviesFromCinemaWorld = await GetMoviesByProvider("cinemaworld");
-        var moviesFromFilmWorld = await GetMoviesByProvider("filmworld");
+        // Fetch movies from both providers asynchronously
+        var moviesFromCinemaWorldTask = GetMoviesByProvider("cinemaworld");
+        var moviesFromFilmWorldTask = GetMoviesByProvider("filmworld");
+
+        // Wait for both tasks to complete
+        await Task.WhenAll(moviesFromCinemaWorldTask, moviesFromFilmWorldTask);
+
+        var moviesFromCinemaWorld = await moviesFromCinemaWorldTask;
+        var moviesFromFilmWorld = await moviesFromFilmWorldTask;
 
         // Create a dictionary to store combined movies
         var combinedMoviesDict = new Dictionary<string, Movie>();
@@ -54,7 +61,6 @@ public class MoviesController : ControllerBase
             else
             {
                 // Reconstruct the movie ID with the appropriate prefix
-                var combinedId = prefix + idWithoutPrefix;
                 combinedMoviesDict[idWithoutPrefix] = movie;
             }
         }
@@ -76,13 +82,12 @@ public class MoviesController : ControllerBase
                 PropertyNameCaseInsensitive = true
             });
 
-            return movies?.Movies;
+            return movies?.Movies ?? new List<Movie>(); // Return an empty list if movies is null
         }
-
         else
         {
             // Retry logic goes here
-            await Task.Delay(5000); // Wait for 5 seconds before retrying
+            await Task.Delay(1000); // Wait for 1 seconds before retrying
             return await GetMoviesByProvider(provider); // Recursive call
         }
     }
