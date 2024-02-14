@@ -55,6 +55,11 @@ export class MoviesComponent {
       (error) => {
         console.error(`Error loading price for movie ${id}:`, error);
         this.isLoadingPrice[id] = false;
+
+        if (error.status === 500) {
+          // Mark movie price as null for the corresponding movie ID
+          this.moviePrices[id] = null;
+        }
       }
     );
   }

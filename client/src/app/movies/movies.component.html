@@ -13,14 +13,14 @@
                 <!-- Additional content for Cinemaworld and Filmworld -->
                 <div class="additional-content">
                     <mat-divider></mat-divider>
-                    <mat-card class="cinemaworld">
+                    <mat-card *ngIf="moviePrices['cw' + movie.id.substring(2)]" class="cinemaworld">
                         <mat-card-content class="content-wrapper">
                             <div class="provider-name"><strong>Cinemaworld</strong></div>
                             <div class="price">{{ moviePrices['cw' + movie.id.substring(2)] }}</div>
                         </mat-card-content>
                     </mat-card>
                     <div class="card-gap"></div>
-                    <mat-card class="filmworld">
+                    <mat-card *ngIf="moviePrices['fw' + movie.id.substring(2)]" class="filmworld">
                         <mat-card-content class="content-wrapper">
                             <div class="provider-name"><strong>Filmworld</strong></div>
                             <div class="price">{{ moviePrices['fw' + movie.id.substring(2)] }}</div>
