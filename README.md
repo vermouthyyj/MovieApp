@@ -16,7 +16,7 @@ Welcome to the Movie App! This application allows users to browse, search, and v
 - ASP.NET Core MVC for building web applications
 - Angular for frontend development
 
-## Step by step to run the project
+## Step by step to run the server locally
 
 ### Step1: Navigate to the API directory
 
@@ -36,7 +36,7 @@ dotnet restore
 dotnet run
 ```
 
-### Step4： Open your web browser and navigate to `https://localhost:5001` to view the application.
+### Step4： Open your web browser and navigate to `https://localhost:5001` to view the application
 
 There are three APIs
 
@@ -59,3 +59,28 @@ The getMovies function may not always return the movie list reliably due to pote
 The getPrice API retrieves the price attribute from the getMovieDetail API. However, due to potential unreliability in obtaining the required detail from getMovieDetail, we have implemented
 
 1. a retry mechanism. This mechanism allows the getPrice API to be recalled up to three times, ensuring that the API returns the price if it exists.
+
+## Step by step to run the client locally
+
+### Step1: Install Node.js and npm
+
+### Step2: Install Angular CLI
+
+```
+npm install -g @angular/cli
+```
+
+### Step3: Install Project Dependencies
+
+```
+npm install
+```
+
+### Step4: Run the Angular Development Server
+
+```
+ng serve
+
+```
+
+### Step5: Once the server is running, open your web browser and navigate to `http://localhost:4200/` (or the specified URL if you have customized it). You should see your Angular application running.
