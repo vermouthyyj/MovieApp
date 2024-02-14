@@ -71,14 +71,38 @@ public class MovieController : ControllerBase
             return NotFound();
         }
 
-        try
-        {
-            HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
-            response.EnsureSuccessStatusCode(); // Ensure success status code
+        HttpResponseMessage? response = null;
+        int maxRetries = 3;
+        int retryCount = 0;
+        bool success = false;
 
+        while (!success && retryCount < maxRetries)
+        {
+            try
+            {
+                response = await _httpClient.GetAsync(apiUrl);
+                response.EnsureSuccessStatusCode(); // Ensure success status code
+
+                success = true;
+            }
+            catch (HttpRequestException ex)
+            {
+                // Log and return a 500 Internal Server Error response
+                Console.WriteLine("HttpRequestException: " + ex.Message);
+                retryCount++;
+                if (retryCount < maxRetries)
+                {
+                    Console.WriteLine($"Retrying... Attempt {retryCount} of {maxRetries}");
+                    await Task.Delay(1000); // Wait for 1 second before retrying
+                }
+            }
+        }
+
+        // Success
+        if (response != null && response.IsSuccessStatusCode)
+        {
             string content = await response.Content.ReadAsStringAsync();
 
-            // Deserialize the JSON response into a Movie object
             var movie = JsonSerializer.Deserialize<MovieDetails>(content, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
@@ -86,13 +110,11 @@ public class MovieController : ControllerBase
 
             return Ok(movie); // Return the movie details
         }
-        catch (HttpRequestException ex)
+        // Error handling
+        else
         {
-            // Log and return a 500 Internal Server Error response
-            Console.WriteLine("HttpRequestException: " + ex.Message);
             return StatusCode(500, "Error accessing movie provider API.");
         }
-
     }
 
     private static string? GetMovieApiUrl(string provider, string id)
