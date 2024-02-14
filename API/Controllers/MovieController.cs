@@ -9,7 +9,6 @@ namespace API.Controllers;
 public class MovieController : ControllerBase
 {
     private readonly HttpClient _httpClient;
-    private object movieDetail;
 
     public MovieController(IHttpClientFactory httpClientFactory)
     {
