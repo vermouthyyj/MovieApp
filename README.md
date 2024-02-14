@@ -14,7 +14,8 @@ Welcome to the Movie App! This application allows users to browse, search, and v
 - .NET Core
 - C# Programming Language
 - ASP.NET Core MVC for building web applications
-- Angular for frontend development
+- Angular for frontend development (Angular16)
+- Node: Node.js v18.19.0
 
 ## Step by step to run the project
 
