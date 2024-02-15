@@ -11,10 +11,11 @@ Welcome to the Movie App! This application allows users to browse, search, and v
 
 ## Technologies Used
 
-- .NET Core
+- .NET Core (Version: 8.0.1)
 - C# Programming Language
 - ASP.NET Core MVC for building web applications
-- Angular for frontend development
+- Angular for frontend development (Angular16)
+- NodeJs (node v18.19.0)
 
 ## Step by step to run the server locally
 
