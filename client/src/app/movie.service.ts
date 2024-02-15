@@ -16,7 +16,7 @@ export class MovieService {
 
     /** GET movies from the server */
     getMovies(): Observable<Movie[]> {
-      return this.http.get<Movie[]>('https://localhost:5001/movies')
+      return this.http.get<Movie[]>('https://movieapp-vermouthyyj.fly.dev/movies')
         .pipe(
           tap(_ => this.log('fetched movies')),
           catchError(this.handleError<Movie[]>('getMovies', []))
@@ -25,7 +25,7 @@ export class MovieService {
   
     /** GET movie price from the server */
     getMoviePrice(id: string): Observable<string> {
-      return this.http.get<string>(`https://localhost:5001/movie/${id}/price`)
+      return this.http.get<string>(`https://movieapp-vermouthyyj.fly.dev/movie/${id}/price`)
         .pipe(
           tap(_ => this.log(`fetched price for movie ${id}`)),
           catchError(this.handleError<string>(`getMoviePrice id=${id}`))
