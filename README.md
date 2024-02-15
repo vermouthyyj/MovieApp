@@ -1,6 +1,6 @@
 # MovieApp
 
-Welcome to the Movie App! This application allows users to browse, search, and view details about movies from different providers. Currently we have two prividers **cinemaworld** and **filmworld**. The app enable user to get the cheapest price for movies from these two providers in a timely manner.
+Welcome to the Movie App! This application allows users to browse and view details about movies from different providers. Currently we have two prividers **cinemaworld** and **filmworld**. The app enable user to get the cheapest price for movies from these two providers in a timely manner.
 
 The Movie application's web interface is hosted on Netlify, accessible via the following link: [MovieApp](https://65ce0e9eb58a78071c7ded32--lucky-naiad-10e2f2.netlify.app/)
 
