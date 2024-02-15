@@ -10,6 +10,8 @@ This setup segregates the frontend and backend components of the application, al
 
 By adopting this architecture, the application benefits from a decoupled design, facilitating independent scaling and maintenance of frontend and backend services.
 
+![alt text](image.png)
+
 ## Features
 
 - Browse a list of movies from various providers.
