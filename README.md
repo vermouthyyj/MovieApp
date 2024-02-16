@@ -15,9 +15,11 @@ By adopting this architecture, the application benefits from a decoupled design,
 ## Features
 
 - Browse a list of movies from various providers.
-- Search for movies by title, genre, or keyword.
-- View detailed information about each movie, including title, release year, genre etc.
+- Price matching of movies across various providers.
+
+### Potential improvements for when there is a greater variety of movies and additional providers available
 - Filter movies by provider and genre
+- Search for movies by title, genre, or keyword.
 
 ## Technologies Used
 
