@@ -17,9 +17,20 @@ By adopting this architecture, the application benefits from a decoupled design,
 - Browse a list of movies from various providers.
 - Price matching of movies across various providers.
 
-### Potential improvements for when there is a greater variety of movies and additional providers available
+#### Potential improvements for when there is a greater variety of movies and additional providers available
 - Filter movies by provider and genre
 - Search for movies by title, genre, or keyword.
+
+## Highlights
+
+The getMovies function may not always return the movie list reliably due to potential issues with the real-world API. Therefore,
+
+1. a retry mechanism has been implemented to recall the real-world API in case it returns an unsuccessful response code.
+2. Movies from both providers are fetched asynchronously using Task.WhenAll.
+
+The getPrice API retrieves the price attribute from the getMovieDetail API. However, due to potential unreliability in obtaining the required detail from getMovieDetail, we have implemented
+
+1. a retry mechanism. This mechanism allows the getPrice API to be recalled up to three times, ensuring that the API returns the price if it exists.
 
 ## Technologies Used
 
@@ -61,17 +72,6 @@ There are three APIs
 
 - GetMoviePrice: /movie/{movieID}/price
   : This API returns the price of the movie
-
-### Highlights
-
-The getMovies function may not always return the movie list reliably due to potential issues with the real-world API. Therefore,
-
-1. a retry mechanism has been implemented to recall the real-world API in case it returns an unsuccessful response code.
-2. Movies from both providers are fetched asynchronously using Task.WhenAll.
-
-The getPrice API retrieves the price attribute from the getMovieDetail API. However, due to potential unreliability in obtaining the required detail from getMovieDetail, we have implemented
-
-1. a retry mechanism. This mechanism allows the getPrice API to be recalled up to three times, ensuring that the API returns the price if it exists.
 
 ## Step by step to run the client locally
 
